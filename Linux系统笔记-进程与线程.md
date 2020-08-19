@@ -11,11 +11,13 @@
 
 - 与进程相关的系统调用：
 
-  - fork()：创建一个与父进程相同的子进程。
-  - waitpid(pid, &status, opts)：调用进程在此处等待子进程。第一个参数使其等待一个特定的子进程，若为-1则等待任意一个子进程。不设置参数则等待所有子进程。第二个参数存储子进程退出状态，第三个参数控制当没有子进程符合要求时进程阻塞或者返回。
-  - exec系列：将进程的映像替换。子进程通过调用exec执行用户命令。
-  - kill(pid, sig)：向pid发送信号sig。
-  - exit(status)：终止进程并返回状态值。
+  ``` C
+  fork();  //创建一个与父进程相同的子进程。
+  waitpid(pid, &status, opts); //调用进程在此处等待子进程。第一个参数使其等待一个特定的子进程，若为-1则等待任意一个子进程。不设置参数则等待所有子进程。第二个参数存储子进程退出状态，第三个参数控制当没有子进程符合要求时进程阻塞或者返回。
+  //exec系列：将进程的映像替换。子进程通过调用exec执行用户命令。
+  kill(pid, sig); //向pid发送信号sig。
+  exit(status); //终止进程并返回状态值。
+  ```
 
 - 进程与线程的实现：
 
@@ -117,14 +119,14 @@
     - pthread调用接口：
 
     ``` C
-    int pthread_mutex_init(pthread_mutex_t* restrict mutex,
-                            const pthread_mutexattr_t* restrict attr)
-    int pthread_mutex_destroy(pthread_mutex_t* mutex)
-    int pthread_mutex_lock(pthread_mutex_t* mutex)
-    int pthread_mutex_trylock(pthread_mutex_t* mutex)
-    int pthread_mutex_unlock(pthread_mutex_t* mutex)
-    int pthread_mutex_timedlock(pthread_mutex_t* restrict mutex,
-                            const struct timespec* restrict tsptr)
+    int pthread_mutex_init(pthread_mutex_t* restrict mutex, 
+                    const pthread_mutexattr_t* restrict attr);
+    int pthread_mutex_destroy(pthread_mutex_t* mutex);
+    int pthread_mutex_lock(pthread_mutex_t* mutex);
+    int pthread_mutex_trylock(pthread_mutex_t* mutex);
+    int pthread_mutex_unlock(pthread_mutex_t* mutex);
+    int pthread_mutex_timedlock(pthread_mutex_t* restrict mutex, 
+                      const struct timespec* restrict tsptr);
     ```
   
   - 读写锁/共享互斥锁
@@ -141,10 +143,10 @@
   
     ``` C
     //...
-    int pthread_rwlock_rdlock(pthread_mutex_t* mutex)   //请求读锁
-    int pthread_rwlock_timedrdlock(pthread_mutex_t* mutex)
-    int pthread_rwlock_wrlock(pthread_mutex_t* mutex)   //请求写锁
-    int pthread_rwlock_timedwrlock(pthread_mutex_t* mutex)
+    int pthread_rwlock_rdlock(pthread_mutex_t* mutex);   //请求读锁
+    int pthread_rwlock_timedrdlock(pthread_mutex_t* mutex);
+    int pthread_rwlock_wrlock(pthread_mutex_t* mutex);   //请求写锁
+    int pthread_rwlock_timedwrlock(pthread_mutex_t* mutex);
     //...
     ```
 
@@ -159,11 +161,11 @@
 
     ``` C
     //...
-    int pthread_cond_wait(pthread_cond_t* cond, pthread_mutex_t* mutex)
-    int pthread_cond_timedwait(pthread_cond_t* cond,
-            pthread_mutex_t* mutex, const struct timespec* tsptr)
-    int pthread_cond_signal(pthread_cond_t* cond)   //通知在cond上等待的至少一个线程
-    int pthread_cond_broadcast(pthread_cond_t* cond)    //通知在cond上等待的所有线程
+    int pthread_cond_wait(pthread_cond_t* cond, pthread_mutex_t* mutex);
+    int pthread_cond_timedwait(pthread_cond_t* cond, 
+                  pthread_mutex_t* mutex, const struct timespec* tsptr);
+    int pthread_cond_signal(pthread_cond_t* cond);   //通知在cond上等待的至少一个线程
+    int pthread_cond_broadcast(pthread_cond_t* cond);    //通知在cond上等待的所有线程
     //...
     ```
 
@@ -177,9 +179,9 @@
 
     ``` C
     //...
-    int pthread_spin_lock(pthread_spinlock_t* lock)
-    int pthread_spin_trylock(pthread_spinlock_t* lock)
-    int pthread_spin_unlock(pthread_spinlock_t* lock)
+    int pthread_spin_lock(pthread_spinlock_t* lock);
+    int pthread_spin_trylock(pthread_spinlock_t* lock);
+    int pthread_spin_unlock(pthread_spinlock_t* lock);
     //...
     ```
 
@@ -190,6 +192,6 @@
 
     ``` C
     //...
-    int pthread_barrier_wait(pthread_barrier_t* barrier)
+    int pthread_barrier_wait(pthread_barrier_t* barrier);
     //...
     ```
